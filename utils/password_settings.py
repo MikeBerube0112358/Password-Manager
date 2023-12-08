@@ -1,7 +1,7 @@
 from password_strength import PasswordPolicy
 from utils.random_pass_gen import generate_random_password
 
-def getUsernameFromUser():
+def get_username_from_user() -> str:
     '''Returns user input as username. '''
     while True:
         try:
@@ -10,7 +10,7 @@ def getUsernameFromUser():
         except:
             print("Not a valid username or password.")
 
-def get_password_from_user(length, uppercase, numbers, special):
+def get_password_from_user(length, uppercase, numbers, special) -> str:
     '''Returns user input as password '''
     pw_option = input(  
                         "Choose a password option.\n" 
@@ -32,8 +32,6 @@ def get_password_from_user(length, uppercase, numbers, special):
         return password
     else:
         generate_random_password()
-
-    
 
 def get_pass_policy():
     """
@@ -71,7 +69,7 @@ def print_policy(policy_details):
     print(f"Minimum Special Characters: {special}")
     print(f"Minimum Non-Letter Characters: {nonletters}\n")
 
-def checkPassword(password, policy):
+def checkPassword(password, policy) -> bool:
     '''Check to make sure the password meets the policy criteria'''
     pwCheck = policy[0].test(password)
     if pwCheck == []:
@@ -80,23 +78,3 @@ def checkPassword(password, policy):
     else:
         print("Password doesn't meet the requirements.")
         return False
-
-'''
-def writeToJson(userPass, jsonFile):
-    with open(jsonFile, 'w') as file:
-        json.dump(userPass, file, indent=4)
-
-def readFromJson(jsonFile):
-    with open(jsonFile, 'r') as file:
-        password = json.load(file)
-    return password
-
-def randomGenPassword():
-    #Randomly generate password 
-    pass
-
-def checkPasswordEntropyBits():
-    #Check pw based on entropy bits
-    pass
-
-'''

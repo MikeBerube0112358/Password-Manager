@@ -29,6 +29,22 @@ def get_userinfo(id):
         else:
             return None
 
+def verify_user(username, password):
+    with DatabaseConnection('hashed_passwords.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f'SELECT * FROM users WHERE username = ?', (username,))
+        row = cursor.fetchone()
+        if row is not None:
+            check_pw = verify_password(row[2], password)
+            if check_pw == True:
+                print("This is a verified user! \n")
+                user = {'id': row[0], 'username': row[1], 'Password': row[2]}
+                return user
+            else:
+                print("Incorrect username or password.\n")
+        else:
+            print("No user found with this username.\n")
+        return None
 
 def get_all_userinfo():
     '''Returns every users info'''
