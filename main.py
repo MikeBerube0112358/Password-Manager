@@ -27,7 +27,7 @@ def menu(policy):
                 password = password_settings.get_password_from_user(length, uppercase, numbers, special)
         database.create_username_pwd_table() 
         database.add_user(username, password)
-        print(password)
+        print(password, '\n')
     elif admin_operation == 'u':
         print(database.get_userinfo(int(input("Enter user ID: "))))
     elif admin_operation == 'v':
@@ -35,7 +35,6 @@ def menu(policy):
         password = input("Enter password: ")
         database.verify_user(username, password)
     elif admin_operation == 'd':
-        #add error handling for this input#######
         database.delete_user(int(input("Enter user ID that you want to delete: ")))
     elif admin_operation == 'i':
         for user in database.get_all_userinfo():

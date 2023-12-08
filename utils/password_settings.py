@@ -13,7 +13,7 @@ def get_username_from_user() -> str:
 def get_password_from_user(length, uppercase, numbers, special) -> str:
     '''Returns user input as password '''
     pw_option = input(  
-                        "Choose a password option.\n" 
+                        "Choose a password option:\n\n" 
                         "For a randomly generated 16 character password enter d (recommended!): \n"   
                         "For a manual password enter m: \n"
                         "For a minimum length randomly generated password based on password policy enter p: "

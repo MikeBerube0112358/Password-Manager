@@ -27,9 +27,11 @@ def get_userinfo(id):
             user = {'id': row[0], 'username': row[1], 'Password': row[2]}
             return user
         else:
-            return None
+            return "No user with that ID.\n"
 
 def verify_user(username, password):
+    '''Takes a username and password. Passes password into verify_password if true user is verified.
+    '''
     with DatabaseConnection('hashed_passwords.db') as connection:
         cursor = connection.cursor()
         cursor.execute(f'SELECT * FROM users WHERE username = ?', (username,))
@@ -47,16 +49,27 @@ def verify_user(username, password):
         return None
 
 def get_all_userinfo():
-    '''Returns every users info'''
+    '''Returns every row in table'''
     with DatabaseConnection('hashed_passwords.db') as connection:
         cursor = connection.cursor()
         cursor.execute(f'SELECT * FROM users')
         users = [{'id': row[0], 'username': row[1], 'Password': row[2]} for row in cursor.fetchall()]
-    return users
-
+        if users != []:
+            return users
+        else:
+            print("This table is empty.\n")
+            return []
+   
 def delete_user(id):
-    '''Takes a users id number and deletes that user'''
+    '''Takes a user's id number and deletes that user.'''
     with DatabaseConnection('hashed_password.db') as connection:
         cursor = connection.cursor()
-        cursor.execute(f'DELETE FROM users WHERE user_id = ?', (id,))
-        #print out the deleted username
+        cursor.execute('SELECT * FROM users WHERE user_id = ?', (id,))
+        row = cursor.fetchone()
+        #Checks to see if user exists, if yes deletes and prints deleted users name
+        if row is not None:
+            user = {'id': row[0], 'username': row[1]}
+            cursor.execute('DELETE FROM users WHERE user_id = ?', (id,))
+            print(f"Username: {user['username']} has been removed.\n")
+        else:
+            print("ID number wasn't found.\n")
